@@ -25,6 +25,7 @@ class List extends React.Component {
 
     componentDidMount(){
         this.tasksRef.on('child_added',this.handleChildAdded);
+        // this.taskRef.on('child_remove', this.handleChildRemove);
     }
 
 
@@ -122,10 +123,10 @@ class AddForm extends React.Component{
     render(){
         return(
             <section className="row">
-            <div className="addForm input-field offset-s1 col s10">
-            <input placeholder="Task" id="first_name" type="text" className="validate" value={this.state.task} onChange={this.handleTask} onKeyUp={(e)=>{if(e.keyCode===13)this.handleCreateTask()}}/>
-            <a className="waves-effect waves-light btn right" onClick={this.handleCreateTask}>Add</a>
-            </div>
+                <div className="addForm input-field offset-s1 col s10">
+                    <input placeholder="New Task" id="first_name" type="text" className="validate" value={this.state.task} onChange={this.handleTask} onKeyUp={(e)=>{if(e.keyCode===13)this.handleCreateTask()}}/>
+                    <a className="waves-effect waves-light btn right" onClick={this.handleCreateTask}>Add</a>
+                </div>
             </section>
         );
     }
@@ -159,12 +160,21 @@ class Task extends React.Component{
 
     render(){
         return (
-            <li key={this.props.id} className="col s8">
-             <label>
-             <input type="checkbox" className="filled-in" checked={this.props.check} id={this.props.id} onChange={this.props.onCheck}/>
-             <span>{this.props.text}</span>
-             </label>
-         </li>
+
+            <li key={this.props.id} className="offset-s1 col s10">
+                <div className="card">
+                    <div className="card-content white-text">
+                        <label>
+                            <input type="checkbox" className="filled-in" checked={this.props.check} id={this.props.id} onChange={this.props.onCheck}/>
+                            <span>{this.props.text}</span>
+                        </label>
+                    </div>
+                <div className="card-action">
+                    <a href="#"><i className="material-icons edit">edit</i></a>
+                    <a href="#"><i className="material-icons delete">delete</i></a>
+                </div>
+                </div>
+            </li>
         );
     }
 }
