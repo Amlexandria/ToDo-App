@@ -28,11 +28,11 @@ class List extends React.Component {
         // this.taskRef.on('child_remove', this.handleChildRemove);
     }
 
-
+    //AGREGANDO UNA NUEVA TAREA AL ARRAY CON LA RESPUESTA DE FIREBASE
     handleChildAdded(data){
         /** El contenido del nodo está en  .val() **/
         const newTask = data.val();
-        // console.log(data);
+        console.log(data);
 		/** Necesitamos que el id pueda editarse o borrarse, así que lo guardamos en el objeto **/
         newTask.id= data.key
         // console.log(newTask);
@@ -60,21 +60,27 @@ class List extends React.Component {
         // console.log(e.target);
         const taskRef = this.tasksRef.child(e.target.id);
 		taskRef.update({
-			check: e.target.checked,
+			check: e.target.checked
         });
-        
-        // if(e.target.checked == true){
-        //     console.log("true")
-        //     document.getElementsByTagName("span").style.textDecorationStyle = "line-through";
-        // }
     }
 
-    // handleCheckedTaskText(e){
-    //     if(e.target.checked == true){
-    //             console.log("true")
-    //             document.getElementsByTagName("span").style.textDecorationStyle = "line-through";
-    //         }
-    // }
+    
+
+    // handleChildChanged(data){
+	// 	/** We fill the new data with the needed data **/
+	// 	const newTask = data.val();
+	// 	newTask.id= data.key
+		
+	// 	/** We create a copy of the array to be patched **/
+	// 	var newTasks = this.state.tasks.concat([]);
+	// 	const index = newTasks.findIndex(task=> task.id=== data.key);
+		
+	// 	/** We insert the new task in place **/
+	// 	newTasks.splice(index,1,newTask);
+		
+	// 	/** We finally rewrite the array**/
+	// 	this.setState({ tasks: newTasks })
+	// }
 
     render(){
         
@@ -100,7 +106,7 @@ class AddForm extends React.Component{
         super(props);
 
         this.state = {
-            task: '',
+            value: '',
             error: '',
         }
         this.handleTask = this.handleTask.bind(this);
@@ -109,13 +115,13 @@ class AddForm extends React.Component{
     }
 
     handleTask(e){
-        this.setState({task: e.target.value})
+        this.setState({value: e.target.value})
     }
 
-    handleCreateTask(e){
+    handleCreateTask(){
         console.log(this.state.task);
-        this.props.addTask(this.state.task);
-        this.setState({task: ""});
+        this.props.addTask(this.state.value);
+        this.setState({value: ""});
     }
 
     
@@ -124,7 +130,7 @@ class AddForm extends React.Component{
         return(
             <section className="row">
                 <div className="addForm input-field offset-s1 col s10">
-                    <input placeholder="New Task" id="first_name" type="text" className="validate" value={this.state.task} onChange={this.handleTask} onKeyUp={(e)=>{if(e.keyCode===13)this.handleCreateTask()}}/>
+                    <input placeholder="New Task" id="first_name" type="text" className="validate" value={this.state.value} onChange={this.handleTask} onKeyUp={(e)=>{if(e.keyCode===13)this.handleCreateTask()}}/>
                     <a className="waves-effect waves-light btn right" onClick={this.handleCreateTask}>Add</a>
                 </div>
             </section>
@@ -135,11 +141,13 @@ class AddForm extends React.Component{
 
 
 function TaskList(props) {
+    console.log(props)
     return (
         <div className="row">
             <ul className="offset-s1 col s10">
             {props.tasks.map(task =>(
-                <Task key={task.id} text={task.text}  id={task.id} onCheck={props.onCheck}/>
+                console.log(task),
+                <Task key={task.id} text={task.task}  id={task.id} onCheck={props.onCheck}/>
             ))}
             </ul>
         </div>
@@ -150,11 +158,10 @@ function TaskList(props) {
 class Task extends React.Component{
     constructor(props){
         super(props);
+        console.log(props);
 
         this.state = {
-            newText: '',
-
-
+            text:'',
         }
     }
 
