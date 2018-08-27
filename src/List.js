@@ -17,6 +17,8 @@ class List extends React.Component {
         this.handleChildAdded = this.handleChildAdded.bind(this);
         this.tasksRef = firebase.database().ref().child(`tasks/${this.props.user.uid}`);
         this.handleCheckTask = this.handleCheckTask.bind(this);
+        this.handleChildRemoved = this.handleChildRemoved.bind(this);
+        this.handleDeleteTask = this.handleDeleteTask.bind(this);
 
         
     }
@@ -25,10 +27,10 @@ class List extends React.Component {
 
     componentDidMount(){
         this.tasksRef.on('child_added',this.handleChildAdded);
-        // this.taskRef.on('child_remove', this.handleChildRemove);
+        this.tasksRef.on('child_removed',this.handleChildRemoved);
     }
 
-    //AGREGANDO UNA NUEVA TAREA AL ARRAY CON LA RESPUESTA DE FIREBASE
+    //AGREGANDO UNA NUEVA TAREA AL ARRAY CON LA RESPUESTA DE FIREBASE-----------------------------------
     handleChildAdded(data){
         /** El contenido del nodo está en  .val() **/
         const newTask = data.val();
@@ -64,23 +66,29 @@ class List extends React.Component {
         });
     }
 
-    
 
-    // handleChildChanged(data){
-	// 	/** We fill the new data with the needed data **/
-	// 	const newTask = data.val();
-	// 	newTask.id= data.key
-		
-	// 	/** We create a copy of the array to be patched **/
-	// 	var newTasks = this.state.tasks.concat([]);
-	// 	const index = newTasks.findIndex(task=> task.id=== data.key);
-		
-	// 	/** We insert the new task in place **/
-	// 	newTasks.splice(index,1,newTask);
-		
-	// 	/** We finally rewrite the array**/
-	// 	this.setState({ tasks: newTasks })
-	// }
+    //BORRANDO UNA TAREA DE LA LISTA-----------------------------------------------
+    handleChildRemoved(data){
+        /** Creando una copia del array para borrar (el concat con un array vacío, sólo crea una copia**/
+        var newTasks = this.state.tasks.concat([]);
+        //buscando en newTask y guardando el índice que contega el elemento(la task) cuyo id sea igual a la key (nosotros asignamos la key de la data como valor del id)
+        const index = newTasks.findIndex(task=> task.id === data.key);
+
+        /** Removiendo la task de la copia del array generado en newTask */
+        newTasks.splice(index,1);
+        
+        /** Reescribiendo el array**/
+        this.setState({ tasks: newTasks })
+    }
+    
+    handleDeleteTask(e){
+        // e.preventDefault();
+		/** The parent has the id **/
+		// const parent = e.target.closest('.task');
+		const taskRef = this.tasksRef.child(e.target.id);
+		taskRef.remove();
+    }
+
 
     render(){
         
@@ -92,7 +100,7 @@ class List extends React.Component {
                         </section>
                         <section className ="list">
                             <AddForm addTask={this.handleAddTask}/>
-                            <TaskList tasks={this.state.tasks} onCheck={this.handleCheckTask}/>
+                            <TaskList tasks={this.state.tasks} onCheck={this.handleCheckTask} onDelete={this.handleDeleteTask}/>
                         </section>
                     </section>
                 );
@@ -147,7 +155,7 @@ function TaskList(props) {
             <ul className="offset-s1 col s10">
             {props.tasks.map(task =>(
                 console.log(task),
-                <Task key={task.id} text={task.task}  id={task.id} onCheck={props.onCheck}/>
+                <Task key={task.id} text={task.task}  id={task.id} onCheck={props.onCheck} onDelete={props.onDelete}/>
             ))}
             </ul>
         </div>
@@ -178,7 +186,7 @@ class Task extends React.Component{
                     </div>
                 <div className="card-action">
                     <a href="#"><i className="material-icons edit">edit</i></a>
-                    <a href="#"><i className="material-icons delete">delete</i></a>
+                    <a href="#"><i className="material-icons delete" id={this.props.id} onClick={this.props.onDelete}>delete</i></a>
                 </div>
                 </div>
             </li>
