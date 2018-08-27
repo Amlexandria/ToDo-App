@@ -53,10 +53,14 @@ nav ul a.btn {
     margin-top: .8rem;
     background-color: #DCD2D4; 
 }
-input#first_name.validate {
+input#add-task.validate {
     background-color: white;
     border-radius: .4rem;
     padding-left: 1rem;
+}
+
+.task-checked {
+    background-color: #CFD8DC;
 }
 
 .list{
