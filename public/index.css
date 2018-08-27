@@ -1,5 +1,70 @@
 body {
-    background-color: #E53935;
+    background: linear-gradient(to right, rgba(224,198,195,1) 0%, rgba(212,228,239,1) 100%);
+    /* background-color: #E53935; */
+}
+
+/*----------------- AUTHENTICATE-------------- */
+
+form{
+    margin-top: 7rem;
+    background-color: white;
+    border-radius: .4rem;
+    padding: 5rem;
+}
+
+#mail {
+    margin-top: 3rem;
+}
+
+#password {
+    margin-bottom: .5rem;
+}
+
+a#log-in {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 2rem;
+}
+a#sign-up {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    margin-left: 5rem;
+}
+
+/* ---------------------LIST------------------ */
+
+nav {
+    background-color: #9FA8DA;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+}
+
+nav .brand-logo {
+    margin-left: 1rem;
+}
+
+h6{
+    margin-top: 1.5rem;
+    color:#DCD2D4;
+}
+
+nav ul a.btn {
+    margin-top: .8rem;
+    background-color: #DCD2D4; 
+}
+input#first_name.validate {
+    background-color: white;
+    border-radius: .4rem;
+    padding-left: 1rem;
+}
+
+.list{
+    margin-top: 7rem;
+}
+
+a.add {
+    background-color: #FFA726;
 }
 
 .edit{

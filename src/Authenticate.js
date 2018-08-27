@@ -50,15 +50,18 @@ class Authenticate extends React.Component{
 
         return (
             <section className="row">
-            <form className="offset-s1 col s10">
-                <div>{this.state.error}</div>
-                <input type="text" placeholder="mail" value={this.state.email} onChange={this.handleEmailChange}/>
-                <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePasswordChange}/>
-                <a className="waves-effect waves-light btn right" onClick={this.handleCreateUser}>Sign Up</a>
-                {/* <button type="button" onClick={this.handleCreateUser}>Sign Up</button> */}
-                <a className="waves-effect waves-light btn right" onClick={this.handleLogin}>Log In</a>
-                {/* <button type="button" onClick={this.handleLogin}>Log In</button> */}
-            </form>
+                <nav>
+                    <div className="nav-wrapper">
+                        <a href="#" className="brand-logo center">To do</a>
+                    </div>
+                </nav>
+                <form className="offset-s1 col s10">
+                    <div>{this.state.error}</div>
+                    <input id="mail" type="text" placeholder="mail" value={this.state.email} onChange={this.handleEmailChange}/>
+                    <input id="password" type="password" placeholder="password" value={this.state.password} onChange={this.handlePasswordChange}/>
+                    <a id="sign-up" className="waves-effect waves-light btn" onClick={this.handleCreateUser}>Sign Up</a>
+                    <a id="log-in" className="waves-effect waves-light btn" onClick={this.handleLogin}>Log In</a>
+                </form>
             </section>
         );
     }

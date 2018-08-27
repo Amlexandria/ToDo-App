@@ -82,9 +82,6 @@ class List extends React.Component {
     }
     
     handleDeleteTask(e){
-        // e.preventDefault();
-		/** The parent has the id **/
-		// const parent = e.target.closest('.task');
 		const taskRef = this.tasksRef.child(e.target.id);
 		taskRef.remove();
     }
@@ -93,18 +90,23 @@ class List extends React.Component {
     render(){
         
         return(
-                    <section className="row">
-                        <section className="offset-s1 col s10">
-                            <a className="waves-effect waves-light btn right" onClick={()=>firebase.auth().signOut()}>Log Out</a>
-                            <h6>{this.props.user.email}</h6>
-                        </section>
-                        <section className ="list">
-                            <AddForm addTask={this.handleAddTask}/>
-                            <TaskList tasks={this.state.tasks} onCheck={this.handleCheckTask} onDelete={this.handleDeleteTask}/>
-                        </section>
-                    </section>
-                );
-            }
+            <section className="row">
+                <nav>
+                    <div className="nav-wrapper">
+                        <a href="#" className="brand-logo left">To do</a>
+                        <ul id="nav-mobile" className="right ">
+                            <li><h6>{this.props.user.email}</h6></li>
+                            <li><a className="waves-effect waves-light btn right" onClick={()=>firebase.auth().signOut()}>Log Out</a></li>
+                        </ul>
+                    </div>
+                </nav>
+                <section className ="list">
+                    <AddForm addTask={this.handleAddTask}/>
+                    <TaskList tasks={this.state.tasks} onCheck={this.handleCheckTask} onDelete={this.handleDeleteTask}/>
+                </section>
+            </section>
+        );
+    }
 }
 
 
@@ -139,7 +141,7 @@ class AddForm extends React.Component{
             <section className="row">
                 <div className="addForm input-field offset-s1 col s10">
                     <input placeholder="New Task" id="first_name" type="text" className="validate" value={this.state.value} onChange={this.handleTask} onKeyUp={(e)=>{if(e.keyCode===13)this.handleCreateTask()}}/>
-                    <a className="waves-effect waves-light btn right" onClick={this.handleCreateTask}>Add</a>
+                    <a className="waves-effect waves-light btn right add" onClick={this.handleCreateTask}>Add</a>
                 </div>
             </section>
         );
